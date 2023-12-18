@@ -1,0 +1,57 @@
+clc;
+clear;
+close all;
+load("dane.mat");
+
+
+N_pom = length(a);
+dt = 0.1;
+T = (1:N_pom )* dt;
+
+
+% macierz pomiarow
+y = [v_szum;a_szum];
+
+% model FK
+A = [1 dt dt^2/2;
+    0 1 dt;
+    0 0 1];
+B = 0;
+H = [0 1 0;
+    0 0 1];
+R = [sigma_v^2 0;
+    0 sigma_a^2];
+q = [dt dt^2/2;
+    1 dt;
+    0 1];
+W = eye(2) * 0.002;
+
+% FK
+xHat = zeros(3,N_pom);
+xPost = zeros(3,1);
+Ppost = zeros(3,3);
+I = eye(3);
+for i = 1:N_pom
+    [xPost,Ppost] = KalmanFilter(A,B,H,q,W,R,0,y(:,i),xPost,Ppost,dt);
+    xHat(:,i) = xPost;
+end
+
+% wyniki
+figure;
+subplot(3,1,1);
+plot(t,a,'g');hold on;grid on;
+plot(t,as,'r');
+plot(t,xHat(3,:),'b');
+legend('wzor','pomiar','estymata');
+title('przyspieszenie');
+subplot(3,1,2);
+plot(t,v,'g');hold on;grid on;
+plot(t,vs,'r');
+plot(t,xHat(2,:),'b');
+legend('wzor','pomiar','estymata');
+title('predkosc');
+subplot(3,1,3);
+plot(t,s2,'g');hold on;grid on;
+plot(t,xHat(1,:),'b');
+legend('wzor','estymata');
+title('przemieszczenie');
