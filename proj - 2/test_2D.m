@@ -36,14 +36,14 @@ R = [sigma_v1^2 0 0 0 ;
 		0 0 sigma_v2^2 0;
 		0 0 0 sigma_a2^2];
 
-q = [dt dt^2/2;
-		1 dt;
-		0 1;
-		dt dt^2/2;
-		1 dt;
-		0 1];
+q = [dt dt^2/2 0 0;
+		1 dt 0 0;
+		0 1 0 0;
+		0 0 dt dt^2/2;
+		0 0 1 dt;
+		0 0 0 1];
 
-W = eye(2) * 0.002;
+W = eye(4) * 0.002;
 
 % FK
 estimate_a1 = zeros(1,N_pom);
