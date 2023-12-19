@@ -3,15 +3,15 @@ clear;
 close all;
 load("dane11.mat");
 
-N_pom = length(a1);
+N_pom = length(a);
 dt = 0.1;
 T = (1:N_pom )* dt;
 
-sigma_v1 = 2;
-sigma_a1 = 0.5;
+sigma_v1 = 1;
+sigma_a1 = 0.1;
 
 % macierz pomiarow
-pomiary = [v_pomiar1; a_pomiar1];
+pomiary = [v_pomiar; a_pomiar];
 
 % model FK
 A = [1 dt dt^2/2;
@@ -30,7 +30,7 @@ q = [dt dt^2/2;
 		1 dt;
 		0 1];
 
-W = eye(2) * 0.02;
+W = eye(2) * 0.002;
 
 
 % FK
@@ -57,8 +57,8 @@ end
 % wyniki
 figure(1);
 hold on;
-plot(T, a1, 'b');
-plot(T, a_pomiar1, 'g');
+plot(T, a, 'b');
+plot(T, a_pomiar, 'g');
 plot(T, estimate_a, 'r');
 legend('real','pomiar','estymata');
 title('przyspieszenie');
@@ -66,8 +66,8 @@ grid on;
 
 figure(2)
 hold on;
-plot(T, v1, 'b');
-plot(T, v_pomiar1, 'g');
+plot(T, v, 'b');
+plot(T, v_pomiar, 'g');
 plot(T, estimate_v, 'r');
 legend('real','pomiar','estymata');
 title('predkosc');
@@ -75,7 +75,7 @@ grid on;
 
 figure(3)
 hold on;
-plot(T, s1, 'b');
+plot(T, s, 'b');
 plot(T, estimate_s, 'r');
 legend('real', 'estymata');
 title('przemieszczenie');
@@ -86,9 +86,9 @@ E_v = 0;
 E_s = 0;
 
 for i = 1:N_pom
-	E_a = E_a + (a1(i)- estimate_a(i))^2;
-	E_v = E_v + (v1(i)- estimate_v(i))^2;
-	E_s = E_s + (s1(i)- estimate_s(i))^2;
+	E_a = E_a + (a(i)- estimate_a(i))^2;
+	E_v = E_v + (v(i)- estimate_v(i))^2;
+	E_s = E_s + (s(i)- estimate_s(i))^2;
 end
 disp(E_s)
 
