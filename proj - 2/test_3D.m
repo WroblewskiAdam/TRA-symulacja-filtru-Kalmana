@@ -17,79 +17,82 @@ sigma_v3 = 1;
 sigma_a3 = 0.1;
 
 % macierz pomiarow
-pomiary = [v_pomiar1; a_pomiar1; v_pomiar2; a_pomiar2; v_pomiar3; a_pomiar3];
+measurments = [v_pomiar1; v_pomiar2; v_pomiar3; a_pomiar1; a_pomiar2; a_pomiar3];
 
-% model FK
+% X_Post= [s1, s2, s3, v1, v2, v3, a1, a2, a3]';
+
 F = [1 dt dt^2/2 0 0 0 0 0 0;
-		0 1 dt 0 0 0 0 0 0;
-		0 0 1 0 0 0 0 0 0;
 		0 0 0 1 dt dt^2/2 0 0 0;
-		0 0 0 0 1 dt 0 0 0 ;
-		0 0 0 0 0 1 0 0 0;
 		0 0 0 0 0 0 1 dt dt^2/2;
+		0 1 dt 0 0 0 0 0 0;
+		0 0 0 0 1 dt 0 0 0;
 		0 0 0 0 0 0 0 1 dt;
+		0 0 1 0 0 0 0 0 0;
+		0 0 0 0 0 1 0 0 0;
 		0 0 0 0 0 0 0 0 1];
 
 G = 0;
 
-H = [0 1 0 0 0 0 0 0 0;
-		0 0 1 0 0 0 0 0 0;
+H = [0 0 0 1 0 0 0 0 0;
 		0 0 0 0 1 0 0 0 0;
 		0 0 0 0 0 1 0 0 0;
+		0 0 0 0 0 0 1 0 0;
 		0 0 0 0 0 0 0 1 0;
 		0 0 0 0 0 0 0 0 1];
 
+
 R = [sigma_v1^2 0 0 0 0 0 ;
-		0 sigma_a1^2 0 0 0 0;
-		0 0 sigma_v2^2 0 0 0;
-		0 0 0 sigma_a2^2 0 0;
-		0 0 0 0 sigma_v3^2 0;
+		0 sigma_v2^2 0 0 0 0;
+		0 0 sigma_v3^2 0 0 0;
+		0 0 0 sigma_a1^2 0 0;
+		0 0 0 0 sigma_a2^2 0;
 		0 0 0 0 0 sigma_a3^2];
 
 q = [dt dt^2/2 0 0 0 0;
-		1 dt 0 0 0 0;
-		0 1 0 0 0 0;
 		0 0 dt dt^2/2 0 0;
-		0 0 1 dt 0 0;
-		0 0 0 1 0 0;
 		0 0 0 0 dt dt^2/2;
+		1 dt 0 0 0 0;
+		0 0 1 dt 0 0;
 		0 0 0 0 1 dt;
+		0 1 0 0 0 0;
+		0 0 0 1 0 0;
 		0 0 0 0 0 1];
 
 W = eye(6) * 0.002;
 
 % FK
-estimate_a1 = zeros(1,N_pom);
-estimate_v1 = zeros(1,N_pom);
 estimate_s1 = zeros(1,N_pom);
-
-estimate_a2 = zeros(1,N_pom);
-estimate_v2 = zeros(1,N_pom);
 estimate_s2 = zeros(1,N_pom);
-
-
-estimate_a3 = zeros(1,N_pom);
-estimate_v3 = zeros(1,N_pom);
 estimate_s3 = zeros(1,N_pom);
 
+estimate_v1 = zeros(1,N_pom);
+estimate_v2 = zeros(1,N_pom);
+estimate_v3 = zeros(1,N_pom);
+
+estimate_a1 = zeros(1,N_pom);
+estimate_a2 = zeros(1,N_pom);
+estimate_a3 = zeros(1,N_pom);
+
+% X_Post= [s1, s2, s3, v1, v2, v3, a1, a2, a3]';
 X_Post= [0, 0, 0, 0, 0, 0, 0, 0, 0]';
 
 P_Post = zeros(9,9);
 
 for i = 1:N_pom
-    [X_Post,P_Post] = Kalman_filter(F, G, H, q, W, R, 0, pomiary(:,i), X_Post, P_Post);
+    [X_Post,P_Post] = Kalman_filter(F, G, H, q, W, R, 0, measurments(:,i), X_Post, P_Post);
 	
 	estimate_s1(i) = X_Post(1);
-	estimate_v1(i) = X_Post(2);
-	estimate_a1(i) = X_Post(3);
-
-	estimate_s2(i) = X_Post(4);
+	estimate_s2(i) = X_Post(2);
+	estimate_s3(i) = X_Post(3);
+	
+	estimate_v1(i) = X_Post(4);
 	estimate_v2(i) = X_Post(5);
-	estimate_a2(i) = X_Post(6);
+	estimate_v3(i) = X_Post(6);
 
-	estimate_s3(i) = X_Post(7);
-	estimate_v3(i) = X_Post(8);
+	estimate_a1(i) = X_Post(7);
+	estimate_a2(i) = X_Post(8);
 	estimate_a3(i) = X_Post(9);
+
 end
 
 
