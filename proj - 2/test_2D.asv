@@ -1,4 +1,3 @@
-
 clc;
 clear;
 close all;
@@ -37,14 +36,14 @@ R = [sigma_v1^2 0 0 0 ;
 		0 0 sigma_v2^2 0;
 		0 0 0 sigma_a2^2];
 
-q = [dt dt^2/2 0 0;
-		1 dt 0 0;
-		0 1 0 0;
-		0 0 dt dt^2/2;
-		0 0 1 dt;
-		0 0 0 1];
+q = [dt dt^2/2;
+		1 dt;
+		0 1;
+		dt dt^2/2;
+		1 dt;
+		0 1];
 
-W = eye(4) * 0.002;
+W = eye(2) * 0.002;
 
 % FK
 estimate_a1 = zeros(1,N_pom);
@@ -65,15 +64,15 @@ P_Post = [0 0 0 0 0 0;
 				0 0 0 0 0 0];
 
 for i = 1:N_pom
-    [X_Post,P_Post] = Kalman_filter(A, B, H, q, W, R, 0, pomiary(:,i), X_Post, P_Post);
+    [X_Post,P_Post] = Kalman_filter(A, B, H, q, W, R, 0, pomiary(:,i) ,X_Post, P_Post);
 	
 	estimate_s1(i) = X_Post(1);
 	estimate_v1(i) = X_Post(2);
 	estimate_a1(i) = X_Post(3);
 
-	estimate_s2(i) = X_Post(4);
-	estimate_v2(i) = X_Post(5);
-	estimate_a2(i) = X_Post(6);
+	estimate_s2(i) = X_Post(1);
+	estimate_v2(i) = X_Post(2);
+	estimate_a2(i) = X_Post(3);
 end
 
 
@@ -90,7 +89,7 @@ grid on;
 figure(2)
 hold on;
 plot(T, v1, 'b');
-plot(T, v_pomiar1, 'g');
+plot(T, v_pomiar, 'g');
 plot(T, estimate_v1, 'r');
 legend('real','pomiar','estymata');
 title('predkosc 1 wym');
@@ -115,7 +114,7 @@ legend('real','pomiar','estymata');
 title('przyspieszenie 2 wym');
 grid on;
 
-figure(5)
+figure(2)
 hold on;
 plot(T, v2, 'b');
 plot(T, v_pomiar2, 'g');
@@ -124,7 +123,7 @@ legend('real','pomiar','estymata');
 title('predkosc 2 wym');
 grid on;
 
-figure(6)
+figure(3)
 hold on;
 plot(T, s2, 'b');
 plot(T, estimate_s2, 'r');
