@@ -70,9 +70,9 @@ for i = 1:N_pom
 	estimate_v1(i) = X_Post(2);
 	estimate_a1(i) = X_Post(3);
 
-	estimate_s2(i) = X_Post(1);
-	estimate_v2(i) = X_Post(2);
-	estimate_a2(i) = X_Post(3);
+	estimate_s2(i) = X_Post(4);
+	estimate_v2(i) = X_Post(5);
+	estimate_a2(i) = X_Post(6);
 end
 
 
