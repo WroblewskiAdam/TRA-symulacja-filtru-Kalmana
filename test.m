@@ -25,31 +25,39 @@ end
 % 	s_org(k) = s_org(k-1) + v_org(k)*dt;
 % end
 
-var_v = 0.5;
-cov_v = 0;
+var_v = 1;
+cov_v = 1;
 
-var_s = 0.5;
-cov_s = 0;
+var_s = 1;
+cov_s = 1;
 
 H = [0,1];
 P = [var_s, cov_s; cov_v, var_v];
-R = 2;
+R = 5;
 X = [0;0];
 F = [ 1 dt; 
 		0 1];
 
 G = [0;
-		1];
+		dt];
 
 for k = 2:length(a)
-    X = Kalman_filter(X, a(k), v_szum(k), P, F, H, G, R);
+    [X, P] = Kalman_filter(X, a(k), v_szum(k), P, F, H, G, R);
     v_kalman(k) = H*X;
+    s_kalman(k) = [1, 0]*X;
 end
 
 figure(1)
 hold on
 plot(v_szum)
 plot(v_kalman)
+legend('szum', 'kalman')
+hold off
+
+figure(2)
+hold on
+plot(s)
+plot(s_kalman)
 legend('szum', 'kalman')
 hold off
 

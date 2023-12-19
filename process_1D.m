@@ -5,7 +5,7 @@ function [Y] = process_1D(a, X)
 			0 1];
 
 	G = [0;
-			1];
+		dt];
 
 	Y = F*X + G*a;
 end
