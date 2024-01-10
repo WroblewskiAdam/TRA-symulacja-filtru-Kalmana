@@ -1,4 +1,12 @@
-function [newX,newP] = Kalman_filter (F, G, H, q, W, R, y, xPost, pPost)
+function [newX,newP] = Kalman_filter (F, H, q, W, R, y, xPost, pPost)
+    X_pred = F*xPost;
+    P_pred = F*pPost*F' + ;
+
+    K = P_pred*H'*(H*P_pred*H'+R)^-1;
+    X = X_pred + K*(pomiar - H*X_pred);
+    P = (eye(length(K*H))-K*H)*P_pred*(eye(length((K*H)))-K*H)' + K*R*K';
+
+
     Q = q * W * q';
     I = eye(size(F,1));
     % predykcja
