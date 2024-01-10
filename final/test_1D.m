@@ -1,38 +1,37 @@
-
 clear;
 close all;
-load("dane11.mat");
+load("dane11.mat"); %załadowanie danych pomiarowych i idealnych
 
 N_pom = length(a1);
 dt = 0.1;
 T = (1:N_pom )* dt;
 
-sigma_v1 = 2;
-sigma_a1 = 0.5;
+cov_v1 = 1;
+cov_a1 = 0.1;
 
-% macierz pomiarow
-pomiary = [v_pomiar1; a_pomiar1];
+pomiary = [v1_pomiar; a2_pomiar];
 
-% model FK
-A = [1 dt 0;
+%macierz przejścia modelu
+F = [1 dt 0;
 		0 1 dt;
 		0 0 1];
 
-B = 0;
+% macierz wejścia (sterowania) modelu
+G = 0;
 
+%macierz wyjścia modelu 
 H = [0 1 0;
 		0 0 1];
 
-R = [sigma_v1^2 0;
-		0 sigma_a1^2];
+%macierz kowariancji szumu pomiarowego
+R = [cov_v1^2 0;
+		0 cov_a1^2];
 
-% q = [dt dt^2/2;
-% 		1 dt;
-% 		0 1];
+%macierz kowariancji szumu przetwarzania
+q = [dt dt^2/2;
+		1 dt;
+		0 1];
 
-q = [0 0;
-		0 0;
-		0 0];
 
 W = eye(2) * 0.02;
 
@@ -50,8 +49,7 @@ P_Post = [1 1 1;
 				1 1 1];
 
 for i = 1:N_pom
-    [X_Post,P_Post] = Kalman_filter(A, H, q, W, R, pomiary(:,i) ,X_Post, P_Post);
-	
+    [X_Post,P_Post] = Kalman_filter(F, H, q, W, R, pomiary(:,i) ,X_Post, P_Post);
 	estimate_s(i) = X_Post(1);
 	estimate_v(i) = X_Post(2);
 	estimate_a(i) = X_Post(3);

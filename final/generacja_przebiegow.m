@@ -80,33 +80,35 @@ end
 
 
 if dim == 1
-	a_pomiar1 = a1 + 0.1* randn(1,N_pom);
-	v_pomiar1 = v1 + 1 * randn(1,N_pom);
+	a1_pomiar = a1 + 0.1* randn(1,N_pom);
+	v1_pomiar = v1 + 1 * randn(1,N_pom);
 end
 if dim == 2
-	a_pomiar1 = a1 + 0.1* randn(1,N_pom);
-	v_pomiar1 = v1 + 1 * randn(1,N_pom);
-	a_pomiar2 = a2 + 0.1* randn(1,N_pom);
-	v_pomiar2 = v2 + 1 * randn(1,N_pom);
+	a1_pomiar = a1 + 0.1* randn(1,N_pom);
+	v1_pomiar = v1 + 1 * randn(1,N_pom);
+	a2_pomiar = a2 + 0.1* randn(1,N_pom);
+	v2_pomiar = v2 + 1 * randn(1,N_pom);
 end
 if dim == 3
-	a_pomiar1 = a1 + 0.1* randn(1,N_pom);
-	v_pomiar1 = v1 + 1 * randn(1,N_pom);
-	a_pomiar2 = a2 + 0.1* randn(1,N_pom);
-	v_pomiar2 = v2 + 1 * randn(1,N_pom);
-	a_pomiar3 = a3 + 0.1* randn(1,N_pom);
-	v_pomiar3 = v3 + 1 * randn(1,N_pom);
+	a1_pomiar = a1 + 0.1* randn(1,N_pom);
+	v1_pomiar = v1 + 1 * randn(1,N_pom);
+	a2_pomiar = a2 + 0.1* randn(1,N_pom);
+	v2_pomiar = v2 + 1 * randn(1,N_pom);
+	a3_pomiar = a3 + 0.1* randn(1,N_pom);
+	v3_pomiar = v3 + 1 * randn(1,N_pom);
 end
 
 if dim == 1
-	save("dane1D_01_1.mat","a1","v1", "s1", "a_pomiar1", "v_pomiar1")
+	save("dane1D_01_1.mat","a1","v1", "s1", "a1_pomiar", "v1_pomiar")
 end
 if dim == 2
-	save("dane2D_01_1.mat","a1","v1", "s1", "a_pomiar1", "v_pomiar1", "a2","v2", "s2", "a_pomiar2", "v_pomiar2")
+	save("dane2D_01_1.mat","a1","v1", "s1", "a1_pomiar", "v1_pomiar", "a2","v2", "s2", "a2_pomiar", "v2_pomiar")
 end
 if dim == 3
-	save("dane3D_01_1.mat","a1","v1", "s1", "a_pomiar1", "v_pomiar1", "a2","v2", "s2", "a_pomiar2", "v_pomiar2","a3","v3", "s3", "a_pomiar3", "v_pomiar3")
+	save("dane3D_01_1.mat","a1","v1", "s1", "a1_pomiar", "v1_pomiar", "a2","v2", "s2", "a2_pomiar", "v2_pomiar","a3","v3", "s3", "a3_pomiar", "v3_pomiar")
 end
+
+
 % figure(1)
 % subplot(3,1,1)
 % plot(T,a1)
