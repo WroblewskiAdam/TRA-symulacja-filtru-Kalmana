@@ -14,7 +14,7 @@ sigma_a1 = 0.5;
 pomiary = [v_pomiar1; a_pomiar1];
 
 % model FK
-A = [1 dt dt^2/2;
+A = [1 dt 0;
 		0 1 dt;
 		0 0 1];
 
@@ -26,9 +26,13 @@ H = [0 1 0;
 R = [sigma_v1^2 0;
 		0 sigma_a1^2];
 
-q = [dt dt^2/2;
-		1 dt;
-		0 1];
+% q = [dt dt^2/2;
+% 		1 dt;
+% 		0 1];
+
+q = [0 0;
+		0 0;
+		0 0];
 
 W = eye(2) * 0.02;
 
@@ -41,9 +45,9 @@ xHat = zeros(3,N_pom);
 
 X_Post= [0, 0, 0]';
 
-P_Post = [0 0 0;
-				0 0 0;
-				0 0 0];
+P_Post = [1 1 1;
+				1 1 1;
+				1 1 1];
 
 for i = 1:N_pom
     [X_Post,P_Post] = Kalman_filter(A, H, q, W, R, pomiary(:,i) ,X_Post, P_Post);
