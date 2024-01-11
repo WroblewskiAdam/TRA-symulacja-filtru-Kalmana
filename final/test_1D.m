@@ -33,9 +33,9 @@ q = [dt dt^2/2;
 		1 dt;
 		0 1];
 
-W = eye(2) * 0.005;
+W = 0.005;
 
-Q = q * W * q';
+Q = W * (q  * q');
 
 estimate_a = zeros(1,N_pom);
 estimate_v = zeros(1,N_pom);

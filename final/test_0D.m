@@ -31,7 +31,7 @@ q = 0;
 
 W =  5;
 
-Q = q * W * q';
+Q = W * (q * q');
 
 estimate = zeros(1,N_pom);
 

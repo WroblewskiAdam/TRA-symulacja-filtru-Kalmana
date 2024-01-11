@@ -64,9 +64,9 @@ q = [dt dt^2/2 0 0 0 0;
 		0 0 0 1 0 0;
 		0 0 0 0 0 1];
 
-W = eye(6) * 0.02;
+W = 0.02;
 
-Q = q * W * q';
+Q = W * (q * q');
 
 estimate_a1 = zeros(1,N_pom);
 estimate_v1 = zeros(1,N_pom);
