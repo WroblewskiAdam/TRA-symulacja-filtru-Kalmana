@@ -45,7 +45,7 @@ q = [dt dt^2/2 0 0;
 		0 1 0 0;
 		0 0 0 1];
 
-W = eye(4) * 0.02;
+W = eye(4) * 0.005;
 
 Q = q * W * q';
 
@@ -95,7 +95,7 @@ plot(T, estimate_a1, 'r');
 legend('real','pomiar','estymata');
 title('przyspieszenie 1 wym');
 grid on;
-print("2D_przyspieszenie_1wym,","-dpng","-r800")
+print("2D_przyspieszenie_1wym","-dpng","-r800")
 
 
 figure(2)
@@ -106,7 +106,7 @@ plot(T, estimate_v1, 'r');
 legend('real','pomiar','estymata');
 title('predkosc 1 wym');
 grid on;
-print("2D_predkosc_1wym,","-dpng","-r800")
+print("2D_predkosc_1wym","-dpng","-r800")
 
 
 figure(3)
@@ -116,7 +116,7 @@ plot(T, estimate_s1, 'r');
 legend('real', 'estymata');
 title('przemieszczenie 1 wym');
 grid on
-print("2D_przemieszczenie_1wym,","-dpng","-r800")
+print("2D_przemieszczenie_1wym","-dpng","-r800")
 
 
 figure(4);
@@ -127,7 +127,7 @@ plot(T, estimate_a2, 'r');
 legend('real','pomiar','estymata');
 title('przyspieszenie 2 wym');
 grid on;
-print("2D_przyspieszenie_2wym,","-dpng","-r800")
+print("2D_przyspieszenie_2wym","-dpng","-r800")
 
 
 figure(5)
@@ -138,7 +138,7 @@ plot(T, estimate_v2, 'r');
 legend('real','pomiar','estymata');
 title('predkosc 2 wym');
 grid on;
-print("2D_predkosc_2wym,","-dpng","-r800")
+print("2D_predkosc_2wym","-dpng","-r800")
 
 
 figure(6)
@@ -148,7 +148,7 @@ plot(T, estimate_s2, 'r');
 legend('real', 'estymata');
 title('przemieszczenie 2 wym');
 grid on
-print("2D_przemieszczenie_2wym,","-dpng","-r800")
+print("2D_przemieszczenie_2wym","-dpng","-r800")
 
 
 E_a1 = 0;
